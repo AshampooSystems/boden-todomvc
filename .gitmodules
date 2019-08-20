@@ -1,0 +1,3 @@
+[submodule "boden"]
+	path = boden
+	url = git@github.com:AshampooSystems/boden-private.git
