@@ -2,7 +2,6 @@
 #include <nlohmann/json.hpp>
 #include <bdn/path.h>
 #include <fstream>
-//#include <iostream>
 
 using nlohmann::json;
 using bdn::path::documentDirectoryPath;
@@ -32,8 +31,6 @@ void TodoStore::save()
     
     std::ofstream file(todoFilePath());
     file << todosJSON;
-    
-    //std::cout << todosJSON.dump() << std::endl;
 }
 
 std::string TodoStore::todoFilePath()
