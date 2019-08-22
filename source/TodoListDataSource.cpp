@@ -1,27 +1,34 @@
-#include "TodoListData.h"
+#include "TodoListDataSource.h"
 #include "TodoListItem.h"
 
 #include <bdn/ui.h>
 
 using namespace bdn::ui;
 
+TodoListDataSource::TodoListDataSource(std::shared_ptr<TodoStore> store)
+{
+    _store = store;
+    _store->load();
+    empty = _store->todos.empty();
+}
+
 void TodoListDataSource::add(const std::string &entry)
 {
-    _entries.push_back({entry, false});
+    _store->todos.push_back({entry, false});
+    _store->save();
     empty = false;
 }
 
 void TodoListDataSource::remove(int index)
 {
-    assert(index >= 0 && index < _entries.size());
-    _entries.erase(_entries.begin() + index);
-
-    if (_entries.empty()) {
-        empty = true;
-    }
+    assert(index >= 0 && index < _store->todos.size());
+    _store->todos.erase(_store->todos.begin() + index);
+    _store->save();
+    
+    empty = _store->todos.empty();
 }
 
-size_t TodoListDataSource::numberOfRows() { return _entries.size(); }
+size_t TodoListDataSource::numberOfRows() { return _store->todos.size(); }
 
 std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(size_t rowIndex,
                                                                    std::shared_ptr<bdn::ui::View> reusableView)
@@ -31,11 +38,13 @@ std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(size_t rowInd
     }
 
     if (auto item = std::dynamic_pointer_cast<TodoListItem>(reusableView)) {
-        item->text = _entries.at(rowIndex).text;
+        item->text = _store->todos.at(rowIndex).text;
         item->completed.onChange().unsubscribeAll();
-        item->completed = _entries.at(rowIndex).completed;
+        item->completed = _store->todos.at(rowIndex).completed;
         item->completed.onChange() += [=](const auto &property) {
-            _entries.at(rowIndex).completed = property.get();
+            _store->todos.at(rowIndex).completed = property.get();
+            _store->save();
+
             _entryCompletedChanged.notify(rowIndex, property.get());
         };
 

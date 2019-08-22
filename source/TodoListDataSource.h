@@ -4,15 +4,14 @@
 #include <bdn/platform.h>
 #include <bdn/ui/ListViewDataSource.h>
 
+#include "TodoStore.h"
+
 class TodoListDataSource : public bdn::ui::ListViewDataSource
 {
+public:
+    TodoListDataSource(std::shared_ptr<TodoStore> store);
+    
   public:
-    struct Entry
-    {
-        std::string text;
-        bool completed;
-    };
-
     bdn::Property<bool> empty = true;
 
   public:
@@ -32,8 +31,8 @@ class TodoListDataSource : public bdn::ui::ListViewDataSource
 #endif
 
   private:
-    std::vector<Entry> _entries;
     bdn::Notifier<size_t, bool> _entryCompletedChanged;
+    std::shared_ptr<TodoStore> _store;
 
 #ifdef BDN_PLATFORM_OSX
     bdn::Notifier<> _onChange;
