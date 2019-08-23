@@ -17,6 +17,7 @@ void TodoListItem::init()
 
     auto checkbox = std::make_shared<Checkbox>();
     checkbox->checked.bind(completed);
+    checkbox->stylesheet = FlexJsonStringify({"flexShrink" : 0});
 
     addChildView(checkbox);
 
