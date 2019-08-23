@@ -14,10 +14,14 @@ set(_sources
     ./source/MainViewController.h
     ./source/MainViewController.cpp
     ./source/main.cpp
-    ./source/TodoListData.cpp
-    ./source/TodoListData.h
+    ./source/TodoListDataSource.cpp
+    ./source/TodoListDataSource.h
     ./source/TodoListItem.cpp
     ./source/TodoListItem.h
+    ./source/TodoStore.cpp
+    ./source/TodoStore.h
+    ./source/Todo.cpp
+    ./source/Todo.h
 )
 
 set(MACOSX_BUNDLE_BUNDLE_NAME TodoMVC)

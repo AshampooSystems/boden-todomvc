@@ -25,7 +25,8 @@ MainViewController::MainViewController()
 
     _listView = std::make_shared<ListView>();
     _listView->enableSwipeToDelete = true;
-    _todoDataSource = std::make_shared<TodoListDataSource>();
+    _todoStore = std::make_shared<TodoStore>();
+    _todoDataSource = std::make_shared<TodoListDataSource>(_todoStore);
     _todoDataSource->entryCompletedChanged() += [=](auto, auto) { /*listView->reloadData();*/ };
     _listView->dataSource = _todoDataSource;
     _listView->stylesheet = FlexJsonStringify({"flexGrow" : 1.0});
@@ -41,7 +42,7 @@ MainViewController::MainViewController()
     };
 
     _todoDataSource->empty.onChange() += [=](auto &property) { handleDataEmptyChange(); };
-
+    
 #ifdef BDN_PLATFORM_OSX
     _todoDataSource->onChange() += [this]() { _listView->reloadData(); };
 #endif

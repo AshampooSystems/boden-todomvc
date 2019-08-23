@@ -1,0 +1,13 @@
+build
+doc
+reports
+.generateProjects.state
+.DS_Store
+3rdparty_build
+.gradle
+*~
+testresults
+testresults.xml
+CMakeLists.txt.user
+*.pyc
+*.orig
