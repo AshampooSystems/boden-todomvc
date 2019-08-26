@@ -6,10 +6,6 @@
 using nlohmann::json;
 using bdn::path::documentDirectoryPath;
 
-TodoStore::TodoStore()
-{
-}
-
 void TodoStore::load()
 {
     json todosJSON;

@@ -6,8 +6,6 @@
 class TodoStore
 {
 public:
-	TodoStore();
-
 	void load();
 	void save();
 
