@@ -26,21 +26,24 @@ MainViewController::MainViewController()
 
     _listView = std::make_shared<ListView>();
     _listView->enableSwipeToDelete = true;
-    _todoStore = std::make_shared<TodoStore>();
+ 
+    _todoStore = std::make_shared<TodoStore>([this](auto) { _listView->reloadData(); });
+    _todoStore->load();
+
     _todoDataSource = std::make_shared<TodoListDataSource>(_todoStore);
     _todoDataSource->entryCompletedChanged() += [=](auto, auto) { /*listView->reloadData();*/ };
+
     _listView->dataSource = _todoDataSource;
     _listView->stylesheet = FlexJsonStringify({"flexGrow" : 1.0});
 
     _mainContainer->addChildView(_listView);
 
-    _listView->onDelete() += [this](int index) { _todoDataSource->remove(index); };
+    _listView->onDelete() += [this](int index) { _todoStore->remove(index); };
 
     _newEntryField->onSubmit() += [=](auto ev) {
         if (!_newEntryField->text->empty()) {
-            _todoDataSource->add(_newEntryField->text);
+            _todoStore->add(_newEntryField->text);
             _newEntryField->text = std::string();
-            _listView->reloadData();
         }
     };
     

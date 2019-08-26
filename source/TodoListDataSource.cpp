@@ -8,24 +8,6 @@ using namespace bdn::ui;
 TodoListDataSource::TodoListDataSource(std::shared_ptr<TodoStore> store)
 {
     _store = store;
-    _store->load();
-    empty = _store->todos.empty();
-}
-
-void TodoListDataSource::add(const std::string &entry)
-{
-    _store->todos.push_back({entry, false});
-    _store->save();
-    empty = false;
-}
-
-void TodoListDataSource::remove(int index)
-{
-    assert(index >= 0 && index < _store->todos.size());
-    _store->todos.erase(_store->todos.begin() + index);
-    _store->save();
-    
-    empty = _store->todos.empty();
 }
 
 size_t TodoListDataSource::numberOfRows() { return _store->todos.size(); }
