@@ -6,7 +6,7 @@
 class TodoStore
 {
 public:
-	TodoStore(std::function<void(const TodoStore*)> storeDidChangedHandler);
+	TodoStore();
 
 	void load();
 	void save();
@@ -19,7 +19,4 @@ public:
     
 private:
     std::string todoFilePath();
-
-private:
-    std::function<void(const TodoStore*)> _todoAddedHandler;
 };
