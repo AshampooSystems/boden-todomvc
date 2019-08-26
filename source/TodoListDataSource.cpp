@@ -60,4 +60,4 @@ std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(size_t rowInd
     return reusableView;
 }
 
-float TodoListDataSource::heightForRowIndex(size_t rowIndex) { return 40; }
+float TodoListDataSource::heightForRowIndex(size_t rowIndex) { return 50; }
