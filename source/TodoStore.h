@@ -21,5 +21,5 @@ private:
     std::string todoFilePath();
 
 private:
-    std::function<void(const TodoStore*)> _storeDidChangeHandler;
+    std::function<void(const TodoStore*)> _todoAddedHandler;
 };

@@ -6,9 +6,9 @@
 using nlohmann::json;
 using bdn::path::documentDirectoryPath;
 
-TodoStore::TodoStore(std::function<void(const TodoStore*)> storeDidChangedHandler)
+TodoStore::TodoStore(std::function<void(const TodoStore*)> todoAddedHandler)
 {
-    _storeDidChangeHandler = storeDidChangedHandler;
+    _todoAddedHandler = todoAddedHandler;
 }
 
 void TodoStore::load()
@@ -25,8 +25,6 @@ void TodoStore::load()
     for (auto todo : todosJSON) {
         todos.push_back(todo);
     }
-
-    _storeDidChangeHandler(this);
 }
 
 void TodoStore::save()
@@ -43,7 +41,7 @@ void TodoStore::save()
 void TodoStore::add(const std::string &todoText)
 {
     todos.push_back({todoText, false});
-    _storeDidChangeHandler(this);
+    _todoAddedHandler(this);
     save();
 }
 
@@ -51,7 +49,6 @@ void TodoStore::remove(size_t index)
 {
     assert(index >= 0 && index < todos.size());
     todos.erase(todos.begin() + index);
-    _storeDidChangeHandler(this);
     save();
 }
 
