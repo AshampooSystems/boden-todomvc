@@ -9,6 +9,9 @@ public:
 	void load();
 	void save();
 
+	void add(const std::string &todoText);
+	void remove(size_t index);
+
 public:
 	std::vector<Todo> todos;
     

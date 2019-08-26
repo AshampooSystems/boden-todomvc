@@ -15,9 +15,6 @@ class MainViewController
     virtual ~MainViewController() = default;
 
   private:
-    void handleDataEmptyChange();
-
-  private:
     std::shared_ptr<bdn::ui::Window> _window;
     std::shared_ptr<TodoListDataSource> _todoDataSource;
     std::shared_ptr<TodoStore> _todoStore;

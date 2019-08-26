@@ -11,14 +11,7 @@ class TodoListDataSource : public bdn::ui::ListViewDataSource
 public:
     TodoListDataSource(std::shared_ptr<TodoStore> store);
     
-  public:
-    bdn::Property<bool> empty = true;
-
-  public:
-    void add(const std::string &entry);
-    void remove(int index);
-
-  public:
+public:
     size_t numberOfRows() override;
     std::shared_ptr<bdn::ui::View> viewForRowIndex(size_t rowIndex,
                                                    std::shared_ptr<bdn::ui::View> reusableView) override;
@@ -30,7 +23,7 @@ public:
     bdn::Notifier<> &onChange() { return _onChange; }
 #endif
 
-  private:
+private:
     bdn::Notifier<size_t, bool> _entryCompletedChanged;
     std::shared_ptr<TodoStore> _store;
 

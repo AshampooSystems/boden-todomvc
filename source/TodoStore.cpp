@@ -33,6 +33,19 @@ void TodoStore::save()
     file << todosJSON;
 }
 
+void TodoStore::add(const std::string &todoText)
+{
+    todos.push_back({todoText, false});
+    save();
+}
+
+void TodoStore::remove(size_t index)
+{
+    assert(index >= 0 && index < todos.size());
+    todos.erase(todos.begin() + index);
+    save();
+}
+
 std::string TodoStore::todoFilePath()
 {
     return documentDirectoryPath() + "/todo.json";
