@@ -19,7 +19,7 @@ MainViewController::MainViewController()
 
     _newEntryField = std::make_shared<TextField>();
     _newEntryField->placeholder = "What needs to be done?";
-    _newEntryField->stylesheet = FlexJsonStringify({"alignSelf" : "Center"});
+    _newEntryField->stylesheet = FlexJsonStringify({"alignSelf" : "Center", "size": { "height": 50 }});
 
     _mainContainer->addChildView(_newEntryField);
 

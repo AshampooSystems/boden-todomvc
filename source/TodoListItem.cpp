@@ -8,11 +8,12 @@ using namespace bdn::ui;
 
 void TodoListItem::init()
 {
+    // Item height is controlled by TodoListDataSource::heightForRowIndex()
     stylesheet = FlexJsonStringify({
-        "direction" : "Row",     //
-        "flexGrow" : 1,          //
-        "alignItems" : "Center", //
-        "padding" : 5            //
+        "direction": "Row",
+        "flexGrow": 1,
+        "alignItems": "Center",
+        "padding": 5
     });
 
     auto checkbox = std::make_shared<Checkbox>();
