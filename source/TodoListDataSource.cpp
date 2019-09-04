@@ -33,7 +33,7 @@ std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(size_t rowInd
 #ifdef BDN_PLATFORM_OSX
         item->_deleteButton->onClick().unsubscribeAll();
         item->_deleteButton->onClick().subscribe([rowIndex, this](const auto &) {
-            this->remove(rowIndex);
+            _store->remove(rowIndex);
             _onChange.notify();
         });
 #endif

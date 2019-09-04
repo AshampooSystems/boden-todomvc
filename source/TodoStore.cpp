@@ -1,10 +1,15 @@
 #include "TodoStore.h"
+
 #include <nlohmann/json.hpp>
 #include <bdn/path.h>
+
 #include <fstream>
+#include <filesystem>
 
 using nlohmann::json;
 using bdn::path::documentDirectoryPath;
+using std::filesystem::path;
+using std::filesystem::create_directories;
 
 void TodoStore::load()
 {
@@ -48,5 +53,8 @@ void TodoStore::remove(size_t index)
 
 std::string TodoStore::todoFilePath()
 {
-    return documentDirectoryPath() + "/todo.json";
+    path p = path(documentDirectoryPath()) / "TodoMVC";
+    create_directories(p);
+    
+    return p / "todo.json";
 }
