@@ -1,10 +1,27 @@
 #include "TodoStore.h"
-#include <nlohmann/json.hpp>
+
 #include <bdn/path.h>
+#include <nlohmann/json.hpp>
 #include <fstream>
 
 using nlohmann::json;
 using bdn::path::documentDirectoryPath;
+
+void TodoStore::add(const std::string &todoText)
+{
+    todos.push_back({todoText, false});
+    save();
+}
+
+void TodoStore::remove(size_t index)
+{
+    if (index >= todos.size()) {
+        return; // silently fail if index is out of bounds
+    }
+
+    todos.erase(todos.begin() + index);
+    save();
+}
 
 void TodoStore::load()
 {
@@ -31,19 +48,6 @@ void TodoStore::save()
     
     std::ofstream file(todoFilePath());
     file << todosJSON;
-}
-
-void TodoStore::add(const std::string &todoText)
-{
-    todos.push_back({todoText, false});
-    save();
-}
-
-void TodoStore::remove(size_t index)
-{
-    assert(index >= 0 && index < todos.size());
-    todos.erase(todos.begin() + index);
-    save();
 }
 
 std::string TodoStore::todoFilePath()
