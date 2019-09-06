@@ -1,5 +1,5 @@
 #include "TodoListDataSource.h"
-#include "TodoListItem.h"
+#include "TodoItemView.h"
 
 #include <bdn/ui.h>
 
@@ -16,28 +16,27 @@ std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(size_t rowInd
                                                                    std::shared_ptr<bdn::ui::View> reusableView)
 {
     if (!reusableView) {
-        reusableView = std::make_shared<TodoListItem>(bdn::needsInit);
+        reusableView = std::make_shared<TodoItemView>(bdn::needsInit);
     }
 
-    if (auto item = std::dynamic_pointer_cast<TodoListItem>(reusableView)) {
-        item->text = _store->todos.at(rowIndex).text;
-        item->completed.onChange().unsubscribeAll();
-        item->completed = _store->todos.at(rowIndex).completed;
-        item->completed.onChange() += [=](const auto &property) {
-            _store->todos.at(rowIndex).completed = property.get();
-            _store->save();
-
-            _entryCompletedChanged.notify(rowIndex, property.get());
-        };
+    auto item = std::dynamic_pointer_cast<TodoItemView>(reusableView);
+    
+    item->text = _store->todos[rowIndex]["text"];
+    item->completed = _store->todos[rowIndex]["completed"];
+    
+    item->completed.onChange().unsubscribeAll();
+    item->completed.onChange() += [=](const auto &property) {
+        _store->todos[rowIndex]["completed"] = property.get();
+        _store->save();
+    };
 
 #ifdef BDN_PLATFORM_OSX
-        item->_deleteButton->onClick().unsubscribeAll();
-        item->_deleteButton->onClick().subscribe([rowIndex, this](const auto &) {
-            _store->remove(rowIndex);
-            _onChange.notify();
-        });
+    item->_deleteButton->onClick().unsubscribeAll();
+    item->_deleteButton->onClick().subscribe([rowIndex, this](const auto &) {
+        _store->remove(rowIndex);
+        _onChange.notify();
+    });
 #endif
-    }
 
     return reusableView;
 }

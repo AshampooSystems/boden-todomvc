@@ -1,12 +1,10 @@
-#include "TodoListItem.h"
+#include "TodoItemView.h"
 
-#include <bdn/platform.h>
-#include <bdn/ui.h>
 #include <bdn/ui/yoga.h>
 
 using namespace bdn::ui;
 
-void TodoListItem::init()
+void TodoItemView::init()
 {
     // Item height is controlled by TodoListDataSource::heightForRowIndex()
     stylesheet = FlexJsonStringify({

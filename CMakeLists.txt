@@ -18,8 +18,8 @@ set(_sources
     ./source/main.cpp
     ./source/TodoListDataSource.cpp
     ./source/TodoListDataSource.h
-    ./source/TodoListItem.cpp
-    ./source/TodoListItem.h
+    ./source/TodoItemView.cpp
+    ./source/TodoItemView.h
     ./source/TodoStore.cpp
     ./source/TodoStore.h
     ./source/Todo.cpp

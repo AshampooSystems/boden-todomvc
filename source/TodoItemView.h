@@ -1,21 +1,17 @@
 #pragma once
 
-#include <bdn/platform.h>
-#include <bdn/ui/Button.h>
-#include <bdn/ui/ContainerView.h>
-#include <bdn/ui/CoreLess.h>
-#include <bdn/ui/TriState.h>
+#include <bdn/ui.h>
 
-class TodoListItem : public bdn::ui::CoreLess<bdn::ui::ContainerView>
+class TodoItemView : public bdn::ui::CoreLess<bdn::ui::ContainerView>
 {
-  public:
+public:
     bdn::Property<std::string> text;
     bdn::Property<bool> completed;
 
-  public:
+public:
     using CoreLess<ContainerView>::CoreLess;
 
-  public:
+public:
     void init() override;
 
 #ifdef BDN_PLATFORM_OSX

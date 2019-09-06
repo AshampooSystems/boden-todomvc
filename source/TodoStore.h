@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Todo.h"
+
 #include <vector>
+#include <nlohmann/json.hpp>
 
 class TodoStore
 {
@@ -18,7 +20,7 @@ public:
 
 public:
 	// The list of todos
-	std::vector<Todo> todos;
+    nlohmann::json todos = std::vector<Todo>();
     
 private:
 	// Returns the path of the todo.json file on internal device storage
