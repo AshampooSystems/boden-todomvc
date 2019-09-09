@@ -10,8 +10,10 @@ public:
     
 public:
     size_t numberOfRows() override;
-    std::shared_ptr<bdn::ui::View> viewForRowIndex(size_t rowIndex,
+    std::shared_ptr<bdn::ui::View> viewForRowIndex(const std::shared_ptr<bdn::ui::ListView>& listView,
+                                                   size_t rowIndex,
                                                    std::shared_ptr<bdn::ui::View> reusableView) override;
+
     float heightForRowIndex(size_t rowIndex) override;
 
 #ifdef BDN_PLATFORM_OSX

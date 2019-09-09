@@ -12,7 +12,8 @@ TodoListDataSource::TodoListDataSource(std::shared_ptr<TodoStore> store)
 
 size_t TodoListDataSource::numberOfRows() { return _store->todos.size(); }
 
-std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(size_t rowIndex,
+std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(const std::shared_ptr<ListView>& listView,
+                                                                   size_t rowIndex,
                                                                    std::shared_ptr<bdn::ui::View> reusableView)
 {
     if (!reusableView) {
@@ -24,10 +25,14 @@ std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(size_t rowInd
     item->text = _store->todos[rowIndex]["text"];
     item->completed = _store->todos[rowIndex]["completed"];
     
+    std::weak_ptr<View> weakItem(item);
+    
     item->completed.onChange().unsubscribeAll();
-    item->completed.onChange() += [=](const auto &property) {
-        _store->todos[rowIndex]["completed"] = property.get();
-        _store->save();
+    item->completed.onChange() += [list=listView.get(), weakItem, this](const auto &property) {
+        if(auto rowIndex = list->rowIndexForView(weakItem.lock())) {
+            _store->todos.at(*rowIndex)["completed"] = property.get();
+            _store->save();
+        }
     };
 
 #ifdef BDN_PLATFORM_OSX
