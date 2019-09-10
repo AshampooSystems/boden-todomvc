@@ -1,10 +1,14 @@
 #include <bdn/ui.h>
 #include <bdn/ui/yoga.h>
+#include <bdn/Application.h>
 
 #include "MainViewController.h"
 
+#include <chrono>
+
 using bdn::Rect;
 using namespace bdn::ui;
+using namespace std::chrono_literals;
 
 MainViewController::MainViewController()
 {
@@ -51,6 +55,7 @@ MainViewController::MainViewController()
             _todoStore->add(_newEntryField->text);
             _listView->reloadData();
             _newEntryField->text = std::string();
+            bdn::App()->dispatchQueue()->dispatchAsyncDelayed(1ms, [=](){_newEntryField->focus();});
         }
     };
     
