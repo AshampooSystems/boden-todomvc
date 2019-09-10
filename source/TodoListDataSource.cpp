@@ -22,15 +22,15 @@ std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(const std::sh
 
     auto item = std::dynamic_pointer_cast<TodoItemView>(reusableView);
     
-    item->text = _store->todos[rowIndex]["text"];
-    item->completed = _store->todos[rowIndex]["completed"];
+    item->text = _store->todos.at(rowIndex).at("text");
+    item->completed = _store->todos.at(rowIndex).at("completed");
     
     std::weak_ptr<View> weakItem(item);
     
     item->completed.onChange().unsubscribeAll();
     item->completed.onChange() += [list=listView.get(), weakItem, this](const auto &property) {
         if(auto rowIndex = list->rowIndexForView(weakItem.lock())) {
-            _store->todos.at(*rowIndex)["completed"] = property.get();
+            _store->todos.at(*rowIndex).at("completed") = property.get();
             _store->save();
         }
     };
