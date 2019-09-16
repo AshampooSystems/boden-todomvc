@@ -4,7 +4,7 @@ Read the full [Boden TodoMVC tutorial](https://medium.com/ashampoo-systems/getti
 
 ## Getting Started
 
-Fist, make sure that the required dependencies and tools are installed by following our [Quick Start Guide](https://www.boden.io/getting-started/).
+First, make sure that the required dependencies and tools are installed by following our [Quick Start Guide](https://www.boden.io/getting-started/).
 
 Clone and open the project in Xcode or Android Studio using a terminal or command prompt:
 
