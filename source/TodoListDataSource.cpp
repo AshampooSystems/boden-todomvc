@@ -10,14 +10,14 @@ TodoListDataSource::TodoListDataSource(std::shared_ptr<TodoStore> store)
     _store = store;
 }
 
-size_t TodoListDataSource::numberOfRows() { return _store->todos.size(); }
+size_t TodoListDataSource::numberOfRows(const std::shared_ptr<bdn::ui::ListView>& listView) { return _store->todos.size(); }
 
 std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(const std::shared_ptr<ListView>& listView,
                                                                    size_t rowIndex,
                                                                    std::shared_ptr<bdn::ui::View> reusableView)
 {
     if (!reusableView) {
-        reusableView = std::make_shared<TodoItemView>(bdn::needsInit);
+        reusableView = std::make_shared<TodoItemView>();
     }
 
     auto item = std::dynamic_pointer_cast<TodoItemView>(reusableView);
@@ -46,4 +46,4 @@ std::shared_ptr<bdn::ui::View> TodoListDataSource::viewForRowIndex(const std::sh
     return reusableView;
 }
 
-float TodoListDataSource::heightForRowIndex(size_t rowIndex) { return 50; }
+float TodoListDataSource::heightForRowIndex(const std::shared_ptr<bdn::ui::ListView>& listView, size_t rowIndex) { return 50; }
