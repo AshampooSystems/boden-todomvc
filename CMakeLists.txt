@@ -49,7 +49,9 @@ ios_configure_app_info(TARGET TodoMVC
     IPAD_ORIENTATIONS ALL)
 
 set_xcode_appicon_asset(TodoMVC "ApplicationIcon")
-use_boden_template_info_plist(TodoMVC)
+use_boden_template_info_plist(TARGET TodoMVC
+                              BUNDLE_NAME "TodoMVC"
+                              BUNDLE_ID "io.boden.todomvc")
 
 get_git_short_revision(GIT_REV)
 set_target_version(TARGET TodoMVC VERSION "1.0.0" SHORTVERSION "1.0" LONGVERSION "1.0.0.${GIT_REV}" ANDROID_VERSION_ID 1)
